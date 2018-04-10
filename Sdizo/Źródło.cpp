@@ -590,17 +590,20 @@ void searchBinary(binar *head, int val)
 	}
 }
 
-void randBinary(binar *head, int val) //NOT WORKING
+void randBinary(binar *head, int _Value)
 {
-	int _Tmp = rand() % 100;
-
-
-	for (int i = 0; i < val; i++)
+	int _Tmp;
+	head->Tab = (int*)realloc(head->Tab, (_Value) * sizeof(int));
+	head->Size = _Value;
+	//head->Tab[head->Size - 1] = _Value;
+	//head->Tab[head->Size] = NULL;
+	//reBuild(head, head->Size);
+	for (int i = 0; i < _Value; i++)
 	{
 		_Tmp = rand() % 100;
-		addToBinar(head, _Tmp);
+		head->Tab[i] = _Tmp;
+		reBuild(head, i);
 	}
-
 }
 
 int main()
@@ -1049,6 +1052,12 @@ int main()
 				system("CLS");
 				int _Tmp;
 				start = read_QPC();
+				/*emptyBinar(A);
+				for (int i = 0; i < N; i++)
+				{
+					_Tmp = rand() % 100;
+					addToBinar(A, _Tmp);
+				}*/
 				randBinary(A, N);
 				elapsed = read_QPC() - start;
 				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
