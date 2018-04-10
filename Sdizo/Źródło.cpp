@@ -2,7 +2,8 @@
 #include <fstream>
 #include <string>
 #include <windows.h>
-#include <iomanip>
+#include <iomanip>
+
 using namespace std;
 
 long long int read_QPC()
@@ -10,7 +11,8 @@ long long int read_QPC()
 	LARGE_INTEGER count;
 	QueryPerformanceCounter(&count);
 	return((long long int)count.QuadPart);
-}
+}
+
 
 struct list
 {
@@ -588,6 +590,19 @@ void searchBinary(binar *head, int val)
 	}
 }
 
+void randBinary(binar *head, int val) //NOT WORKING
+{
+	int _Tmp = rand() % 100;
+
+
+	for (int i = 0; i < val; i++)
+	{
+		_Tmp = rand() % 100;
+		addToBinar(head, _Tmp);
+	}
+
+}
+
 int main()
 {
 	long long int frequency, start, elapsed;
@@ -627,7 +642,8 @@ int main()
 				randList(lista, N);
 				elapsed = read_QPC() - start;
 				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
-					frequency << endl;				
+					frequency << endl;
+				
 				system("pause");
 				system("CLS");
 				break;
@@ -638,7 +654,8 @@ int main()
 				showList(lista);
 				elapsed = read_QPC() - start;
 				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
-					frequency << endl;
+					frequency << endl;
+
 				system("pause");
 				system("CLS");
 				break;
@@ -651,7 +668,8 @@ int main()
 				addOnFrontList(lista, N);
 				elapsed = read_QPC() - start;
 				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
-					frequency << endl;
+					frequency << endl;
+
 				system("pause");
 				system("CLS");
 				break;
@@ -664,7 +682,8 @@ int main()
 				addOnBackList(lista, N);
 				elapsed = read_QPC() - start;
 				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
-					frequency << endl;
+					frequency << endl;
+
 				system("pause");
 				system("CLS");
 				break;
@@ -679,7 +698,8 @@ int main()
 				addOnIndexList(lista, N, I);
 				elapsed = read_QPC() - start;
 				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
-					frequency << endl;
+					frequency << endl;
+
 				system("pause");
 				system("CLS");
 				break;
@@ -690,7 +710,8 @@ int main()
 				deleteOnFrontList(lista);
 				elapsed = read_QPC() - start;
 				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
-					frequency << endl;
+					frequency << endl;
+
 				system("pause");
 				system("CLS");
 				break;
@@ -701,7 +722,8 @@ int main()
 				deleteOnBackList(lista);
 				elapsed = read_QPC() - start;
 				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
-					frequency << endl;
+					frequency << endl;
+
 				system("pause");
 				system("CLS");
 				break;
@@ -713,7 +735,8 @@ int main()
 				start = read_QPC(); deleteOnIndexList(lista, I);
 				elapsed = read_QPC() - start;
 				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
-					frequency << endl;
+					frequency << endl;
+
 				system("pause");
 				system("CLS");
 				break;
@@ -724,7 +747,8 @@ int main()
 				saveList(lista);
 				elapsed = read_QPC() - start;
 				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
-					frequency << endl;
+					frequency << endl;
+
 				system("pause");
 				system("CLS");
 				break;
@@ -735,7 +759,8 @@ int main()
 				openList(lista);
 				elapsed = read_QPC() - start;
 				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
-					frequency << endl;
+					frequency << endl;
+
 				system("pause");
 				system("CLS");
 				break;
@@ -748,7 +773,8 @@ int main()
 				searchList(lista, I);
 				elapsed = read_QPC() - start;
 				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
-					frequency << endl;
+					frequency << endl;
+
 				system("pause");
 				system("CLS");
 				break;
@@ -774,24 +800,55 @@ int main()
 				tab->data = (int*)malloc(0 * sizeof(int));
 				cout << "Podaj rozmiar Tablicy N=";
 				cin >> N;
+				system("CLS");
+				start = read_QPC();
 				randArray(&tab, N);
+				elapsed = read_QPC() - start;
+				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
+					frequency << endl;
+				system("pause");
+				system("CLS");
 				cin.get();
 				break;
 
 			case 1:
+				system("CLS");
+				start = read_QPC();
 				showArray(&tab);
+				elapsed = read_QPC() - start;
+				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
+					frequency << endl;
+
+				system("pause");
+				system("CLS");
 				break;
 
 			case 3:
 				cout << "Podaj wartosc nowego elementu Tablicy=";
 				cin >> N;
+				system("CLS");
+				start = read_QPC();
 				addOnFrontArray(&tab, N);
+				elapsed = read_QPC() - start;
+				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
+					frequency << endl;
+
+				system("pause");
+				system("CLS");
 				break;
 
 			case 4:
 				cout << "Podaj wartosc nowego elementu Tablicy=";
 				cin >> N;
+				system("CLS");
+				start = read_QPC();
 				addOnBackArray(&tab, N);
+				elapsed = read_QPC() - start;
+				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
+					frequency << endl;
+
+				system("pause");
+				system("CLS");
 				break;
 
 			case 5:
@@ -799,35 +856,92 @@ int main()
 				cin >> N;
 				cout << "\nPodaj wartosc indexu=";
 				cin >> I;
+				system("CLS");
+				start = read_QPC();
 				addOnIndexArray(&tab, I, N);
+				elapsed = read_QPC() - start;
+				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
+					frequency << endl;
+
+				system("pause");
+				system("CLS");
 				break;
 
 			case 6:
+				system("CLS");
+				start = read_QPC();
 				deleteOnFrontArray(&tab);
+				elapsed = read_QPC() - start;
+				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
+					frequency << endl;
+
+				system("pause");
+				system("CLS");
 				break;
 
 			case 7:
+				system("CLS");
+				start = read_QPC();
 				deleteOnBackArray(&tab);
+				elapsed = read_QPC() - start;
+				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
+					frequency << endl;
+
+				system("pause");
+				system("CLS");
 				break;
 
 			case 8:
 				cout << "\nPodaj wartosc indexu=";
 				cin >> I;
+				system("CLS");
+				start = read_QPC();
 				deleteOnIndexArray(&tab, I);
+				elapsed = read_QPC() - start;
+				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
+					frequency << endl;
+
+				system("pause");
+				system("CLS");
 				break;
 
 			case 9:
+				system("CLS");
+				start = read_QPC();
 				saveArray(&tab);
+				elapsed = read_QPC() - start;
+				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
+					frequency << endl;
+
+				system("pause");
+				system("CLS");
 				break;
 
+
 			case 10:
+				system("CLS");
+				start = read_QPC();
 				openArray(&tab);
+				elapsed = read_QPC() - start;
+				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
+					frequency << endl;
+
+				system("pause");
+				system("CLS");
 				break;
 
 			case 11:
 				cout << "\nPodaj wartosc szukanej=";
 				cin >> I;
+				system("CLS");
+				start = read_QPC();
 				searchArray(&tab, I);
+				elapsed = read_QPC() - start;
+				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
+					frequency << endl;
+
+				system("pause");
+				system("CLS");
 				break;
 
 			default:
@@ -845,7 +959,8 @@ int main()
 			cout << "4. Zapisz\n";
 			cout << "5. Otworz\n";
 			cout << "6. Wyszukaj\n";
-			cout << "7. Wyjscie\nWybieram:";
+			cout << "7. Rand Binar\n";
+			cout << "8. Wyjscie\nWybieram:";
 
 			cin >> answer;
 			switch (answer)
@@ -853,37 +968,99 @@ int main()
 			case 2:
 				cout << "Podaj wartosc nowego elementu Kopca=";
 				cin >> N;
+				system("CLS");
+				start = read_QPC();
 				addToBinar(A, N);
+				elapsed = read_QPC() - start;
+				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
+					frequency << endl;
+
+				system("pause");
+				system("CLS");
 				break;
 
 			case 1:
+				system("CLS");
+				start = read_QPC();
 				showBinary("", "", 0, A);
+				elapsed = read_QPC() - start;
+				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
+					frequency << endl;
+
+				system("pause");
+				system("CLS");
 				break;
 
 			case 3:
 				cout << "Podaj wartosc indeksu=";
 				cin >> N;
+				system("CLS");
+				start = read_QPC();
 				deleteBinaryIndex(A, N);
+				elapsed = read_QPC() - start;
+				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
+					frequency << endl;
+
+				system("pause");
+				system("CLS");
 				break;
 
 			case 4:
+				system("CLS");
+				start = read_QPC();
 				saveBinary(A);
+				elapsed = read_QPC() - start;
+				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
+					frequency << endl;
+
+				system("pause");
+				system("CLS");
 				break;
 
 			case 5:
+				system("CLS");
+				start = read_QPC();
 				openBinary(A);
+				elapsed = read_QPC() - start;
+				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
+					frequency << endl;
+
+				system("pause");
+				system("CLS");
 				break;
 
 			case 6:
 				cout << "Podaj szukana wartosc=";
 				cin >> N;
+				system("CLS");
+				start = read_QPC();
 				searchBinary(A, N);
+				elapsed = read_QPC() - start;
+				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
+					frequency << endl;
+
+				system("pause");
+				system("CLS");
 				break;
 
+			case 7:
+				cout << "Podaj rozmiar kopca N=";
+				cin >> N;
+				system("CLS");
+				int _Tmp;
+				start = read_QPC();
+				randBinary(A, N);
+				elapsed = read_QPC() - start;
+				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
+					frequency << endl;
+				system("pause");
+				system("CLS");
+				cin.get();
+				break;
 			default:
 				cout << "\nZly wybor\n";
 			}
-		} while (answer != 7);
+		} while (answer != 8);
 		break;
 
 	default:
