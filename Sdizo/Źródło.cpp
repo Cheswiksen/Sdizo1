@@ -13,7 +13,6 @@ long long int read_QPC()
 	return((long long int)count.QuadPart);
 }
 
-
 struct list
 {
 	int value;
@@ -21,258 +20,258 @@ struct list
 	list* back;
 };
 
-void showList(list *head)
+struct lista
 {
-	struct list* Tmp = (struct list*) malloc(sizeof(struct list));
-	Tmp = head;
-	cout << endl;
+	int size;
+	list *head;
+	list *tail;
+};
+
+void searchList(lista *A, int _value)
+{
+	list *Tmp = A->head;
+
+	while (1)
+	{
+		if (Tmp->value == _value)
+		{
+			cout << "\nznalazlem\n";
+		}
+		else
+		{
+			if (Tmp->next == NULL)
+			{
+				cout << "\n nie znalazlem\n";
+				return;
+			}
+			Tmp = Tmp->next;
+		}
+	}
+}
+
+void initLista(lista *List)
+{
+	List->head = NULL;
+	List->tail = NULL;
+	List->size = NULL;
+}
+
+void initList(list *listt)
+{
+	listt->value = NULL;
+	listt->back = NULL;
+	listt->next = NULL;
+}
+
+void addOnFrontList(lista *node, int _value)
+{
+	if (node->size == 0)
+	{
+		list *newNode = (struct list*) malloc(sizeof(list));
+		initList(newNode);
+		node->head = newNode;
+		node->tail = newNode;
+		newNode->value = _value;
+		node->size++;
+		return;
+	}
+	else
+	{
+		list *newNode = (struct list*) malloc(sizeof(list));
+		initList(newNode);
+		node->head->back = newNode;
+		newNode->value = _value;
+		newNode->next = node->head;
+		node->head = newNode;
+		node->size++;
+		return;
+	}
+}
+
+void addOnBackList(lista *node, int _value)
+{
+	if (node->size == 0)
+	{
+		list *newNode = (struct list*) malloc(sizeof(list));
+		initList(newNode);
+		node->head = newNode;
+		node->tail = newNode;
+		newNode->value = _value;
+		node->size++;
+		return;
+	}
+	else
+	{
+		list *newNode = (struct list*) malloc(sizeof(list));
+		initList(newNode);
+		node->tail->next = newNode;
+		newNode->value = _value;
+		newNode->back = node->tail;
+		node->tail = newNode;
+		node->size++;
+		return;
+	}
+}
+
+void addOnIndexList(lista *node, int _value, int place)
+{
+	list *Tmp = node->head;
+	if (place == 0)
+	{
+		addOnFrontList(node, _value);
+		return;
+	}
+	else if (place == node->size)
+	{
+		addOnBackList(node, _value);
+		return;
+	}
+	else if (place < 0 || place >= node->size)
+	{
+		return;
+	}
+	else
+	{
+		list *newNode = (struct list*) malloc(sizeof(list));
+		initList(newNode);
+		for (int i = 0; i <= node->size; i++)
+		{
+			if (i + 1 == place)
+			{
+				list *C = Tmp->next;
+				newNode->value = _value;
+				//newNode->next = Tmp;
+				//newNode->back = Tmp->back;
+				//Tmp->back = newNode;
+				//Tmp->back->next = newNode;
+				newNode->next = C;
+				newNode->back = Tmp;
+				C->back = newNode;
+				Tmp->next = newNode;
+				node->size++;
+				return;
+			}
+			else
+			{
+				Tmp = Tmp->next;
+			}
+		}
+	}
+}
+
+void deleteOnFrontList(lista *node)
+{
+	if (node->size == 0)
+	{
+		return;
+	}
+	else if (node->size == 1)
+	{
+		initLista(node);
+	}
+	else
+	{
+		node->head = node->head->next;
+		node->head->back = NULL;
+		node->size--;
+	}
+}
+
+void deleteOnBackList(lista *node)
+{
+	if (node->size == 0)
+	{
+		return;
+	}
+	else if (node->size == 1)
+	{
+		initLista(node);
+	}
+	else
+	{
+		node->tail = node->tail->back;
+		node->tail->next = NULL;
+		node->size--;
+	}
+}
+
+void deleteOnIndexList(lista *node, int place)
+{
+	list *Tmp = node->head;
+	if (place == 0)
+	{
+		deleteOnFrontList(node);
+		return;
+	}
+	else if (place == node->size - 1)
+	{
+		deleteOnBackList(node);
+		return;
+	}
+	else if (place < 0 || place >= node->size)
+	{
+		return;
+	}
+	else
+	{
+		for (int i = 0; i < node->size; i++)
+		{
+			if (i == place)
+			{
+				Tmp->back->next = Tmp->next;
+				Tmp->next->back = Tmp->back;
+			}
+			else
+			{
+				Tmp = Tmp->next;
+			}
+		}
+		node->size--;
+	}
+}
+
+void showList(lista *node)
+{
+	if (node->size == 0)
+	{
+		std::cout << "\npusta lista\n";
+		return;
+	}
+	list *Tmp = node->head;
 	do
 	{
-		cout << Tmp->value;
+		std::cout << Tmp->value;
 		if (Tmp->next != NULL)
 		{
-			cout << "->";
+			std::cout << "->";
 		}
 		Tmp = Tmp->next;
 	} while (Tmp != NULL);
+	std::cout << std::endl;
 }
 
-void addOnFrontList(list *head, int val)
-{
-	struct list* new_node = (struct list*) malloc(sizeof(struct list));
-	struct list* Tmp = (struct list*) malloc(sizeof(struct list));
-	new_node->value = val;
-	*Tmp = *head;
-	*head = *new_node;
-	head->next = Tmp;
-	Tmp->back = head;
-	head->back = NULL;
-}
-
-void addOnBackList(list *head, int val) 
-{
-	bool in = false;
-	struct list *new_node = (struct list*) malloc(sizeof(struct list));
-	struct list *Tmp = (struct list*) malloc(sizeof(struct list));
-	new_node->value = val;
-	*Tmp = *head;
-	while (Tmp->next != NULL)
-	{
-		in = true;
-		Tmp = Tmp->next;
-	}
-	if (!in)
-	{
-		head->next = new_node;
-		new_node->next = NULL;
-		new_node->back = head;
-		return;
-
-	}
-	Tmp->next = new_node;
-	new_node->next = NULL;
-	new_node->back = Tmp;
-
-}
-
-void addOnIndexList(list *head, int val, int index)
-{
-	if (index < 0)
-	{
-		cout << "\nZly index!\n";
-		return;
-	}
-	if (index == 0)
-	{
-		addOnFrontList(head, val);
-		return;
-	}
-	bool bad = false;
-	struct list* new_node = (struct list*) malloc(sizeof(struct list));
-	struct list* Tmp = (struct list*) malloc(sizeof(struct list));
-	new_node->value = val;
-	*Tmp = *head;
-	for (int i = 0; i < index; i++)
-	{
-		if (Tmp->next != NULL)
-		{
-			Tmp = Tmp->next;
-		}
-		else
-		{
-			bad = true;
-			if (i == index - 1)
-			{
-				addOnBackList(head, val);
-				bad = true;
-				return;
-			}
-			cout << "\nZly index!\n";
-			return;
-		}
-	}
-	if (bad == true)
-	{
-		return;
-	}
-	Tmp->back->next = new_node;
-	new_node->next = Tmp;
-
-	new_node->back = Tmp->back;
-	Tmp->back = new_node;
-
-
-
-
-}
-
-void deleteOnFrontList(list *head)
-{
-	*head = *head->next;
-}
-
-void deleteOnBackList(list *head)
-{
-	/*struct list *Tmp = (struct list*) malloc(sizeof(struct list));
-	*Tmp = *head;
-	while (Tmp->next != NULL)
-	{
-		Tmp = Tmp->next;
-	}
-	Tmp->back->next = NULL;*/
-	struct list *Tmp = (struct list*) malloc(sizeof(struct list));
-	*Tmp = *head;
-	do
-	{
-
-		if (Tmp->next->next == NULL)
-		{
-			Tmp->next = NULL;
-			return;
-		}
-		else
-		{
-			Tmp = Tmp->next;
-		}
-
-	} while (Tmp);
-}
-
-void deleteOnIndexList(list* head, int index)
-{
-	if (index < 0)
-	{
-		cout << "\nZly index!\n";
-		return;
-	}
-	if (index == 0)
-	{
-		deleteOnFrontList(head);
-		return;
-	}
-	bool bad = false;
-	struct list* Tmp = (struct list*) malloc(sizeof(struct list));
-	*Tmp = *head;
-	for (int i = 0; i < index; i++)
-	{
-		if (Tmp->next != NULL)
-		{
-			Tmp = Tmp->next;
-		}
-		else
-		{
-			bad = true;
-			if (i == index - 1)
-			{
-				deleteOnBackList(head);
-				bad = true;
-				return;
-			}
-			cout << "\nZly index!\n";
-			return;
-		}
-	}
-	if (bad == true)
-	{
-		return;
-	}
-	
-	Tmp->back->next = Tmp->next;
-	Tmp->next->back = Tmp->back;
-
-}
-
-void searchList(list* head, int val)
-{
-	bool found = false;
-	struct list* Tmp = (struct list*) malloc(sizeof(struct list));
-	*Tmp = *head;
-	do
-	{	
-		if(Tmp->value == val)
-		{
-			cout << "\nZnaleziono!\n";
-			found = true;
-		}
-		Tmp = Tmp->next;
-	} while (Tmp != NULL);
-	if (!found)
-	{
-		cout << "\nNie znaleziono!\n";
-	}
-
-}
-
-void saveList(list* head)
-{
-	ofstream Out;
-	Out.open("ZapisLista.txt");
-	struct list *Tmp = (struct list*) malloc(sizeof(struct list));
-	*Tmp = *head;
-	if (Tmp == NULL)
-	{
-		Out << "Pusta";
-		return;
-	}
-	while (Tmp != NULL)
-	{
-		Out << Tmp->value << endl;
-		Tmp = Tmp->next;
-	}
-	Out.close();
-}
-
-void openList(list* head)
+void openList(lista *node)
 {
 	ifstream In;
-	In.open("ZapisLista.txt");
+	In.open("Zapis.txt");
+	int size;
 	int Temp;
-	In >> Temp;
-	head->value = Temp;
-	head->next = NULL;
+	In >> size;
+	initLista(node);
 	while (In)
 	{
 		In >> Temp;
-		struct list *new_node = (struct list*) malloc(sizeof(struct list));
-		new_node->value = Temp;
-		head->next = new_node;
-		new_node->back = head;
-		head = head->next;
+		addOnBackList(node, Temp);
 	}
-	head->back->next = NULL;
+	deleteOnBackList(node);
+	if (node->size != size)
+	{
+		cout << "\n!!! ZLY ROZMIAR\n";
+	}
+
 	In.close();
 }
 
-void randList(list* head, int index)
-{
-	head->value = rand() % 100;
-	head->next = NULL;
-	for (int i = 0; i < index-1; i++)
-	{
-		int _Tmp = rand() % 100;
-		addOnFrontList(head, _Tmp);
-	}
-}
 
 
 struct Array
@@ -317,6 +316,7 @@ void addOnBackArray(Array **Arr, int val)
 
 void addOnIndexArray(Array **Arr, int index, int val)
 {
+
 	if (index > (*Arr)->size)
 	{
 		cout << "\nZly index!\n";
@@ -334,6 +334,10 @@ void addOnIndexArray(Array **Arr, int index, int val)
 
 void deleteOnFrontArray(Array **Arr)
 {
+	if ((*Arr)->size == 0)
+	{
+		return;
+	}
 	for (int i = 0; i < (*Arr)->size; i++)
 	{
 		*(((*Arr)->data) + i) = *(((*Arr)->data) + i + 1);
@@ -344,12 +348,20 @@ void deleteOnFrontArray(Array **Arr)
 
 void deleteOnBackArray(Array **Arr)
 {
+	if ((*Arr)->size == 0)
+	{
+		return;
+	}
 	(*Arr)->data = (int*)realloc((*Arr)->data, ((*Arr)->size - 1) * sizeof((*Arr)->data));
 	(*Arr)->size--;
 }
 
 void deleteOnIndexArray(Array **Arr, int index)
 {
+	if ((*Arr)->size == 0)
+	{
+		return;
+	}
 	if (index > (*Arr)->size-1)
 	{
 		cout << "\nZly index!\n";
@@ -531,6 +543,10 @@ void emptyBinar(binar *head)
 
 void deleteBinaryIndex(binar *head, int index)
 {
+	if (head->Size == 0)
+	{
+		return;
+	}
 	for (int i = 0; i < head->Size; i++)
 	{
 		if (i == index)
@@ -585,7 +601,6 @@ void searchBinary(binar *head, int val)
 			cout << "\nZnalaziono!\n";
 			i = head->Size;
 			return;
-			return;
 		}
 	}
 }
@@ -595,9 +610,6 @@ void randBinary(binar *head, int _Value)
 	int _Tmp;
 	head->Tab = (int*)realloc(head->Tab, (_Value) * sizeof(int));
 	head->Size = _Value;
-	//head->Tab[head->Size - 1] = _Value;
-	//head->Tab[head->Size] = NULL;
-	//reBuild(head, head->Size);
 	for (int i = 0; i < _Value; i++)
 	{
 		_Tmp = rand() % 100;
@@ -615,10 +627,8 @@ int main()
 	int answer, N, I;
 
 	cin>>answer;
-	list *lista = (struct list*) malloc(sizeof(list));
-	lista->back = NULL;
-	lista->next = NULL;
-	lista->value = 2;
+	lista *B = (struct lista*) malloc(sizeof(lista));
+	initLista(B);
 	Array* tab;
 	tab = (Array*)malloc(0 * sizeof(Array));
 	tab->size = 0;
@@ -631,30 +641,18 @@ int main()
 	case 1:
 		do
 		{
-			cout << "\n1. Wyswietl liste\n2. Wygeneruj losowa liste o rozmiarze N\n3. Dodaj element na poczatku listy\n4. Dodaj element na koncu listy\n5. Dodaj element do listy o indeksie\n";
-			cout << "6. Usun element na poczatku listy\n7. Usun element na koncu listy\n8. Usun element listy o indeksie\n9. Zapisz do pliku\n10. Otworz z pliku\n11. Szukaj w liscie\n12. Wyjscie\nWybieram:";
+			cout << "\n1. Wyswietl liste\n3. Dodaj element na poczatku listy\n4. Dodaj element na koncu listy\n5. Dodaj element do listy o indeksie\n";
+			cout << "6. Usun element na poczatku listy\n7. Usun element na koncu listy\n8. Usun element listy o indeksie\n10. Otworz z pliku\n11. Szukaj w liscie\n12. Wyjscie\nWybieram:";
 			cin>>answer;
 			system("CLS");
 			switch (answer)
 			{
-			case 2:				
-				cout << "Podaj rozmiar listy N=";
-				cin>>N;
-				system("CLS");
-				start = read_QPC();
-				randList(lista, N);
-				elapsed = read_QPC() - start;
-				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
-					frequency << endl;
-				
-				system("pause");
-				system("CLS");
-				break;
+			
 
 			case 1:
 				system("CLS");
 				start = read_QPC();
-				showList(lista);
+				showList(B);
 				elapsed = read_QPC() - start;
 				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
 					frequency << endl;
@@ -668,7 +666,7 @@ int main()
 				cin >> N;
 				system("CLS");
 				start = read_QPC();
-				addOnFrontList(lista, N);
+				addOnFrontList(B, N);
 				elapsed = read_QPC() - start;
 				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
 					frequency << endl;
@@ -682,7 +680,7 @@ int main()
 				cin >> N;
 				system("CLS");
 				start = read_QPC();
-				addOnBackList(lista, N);
+				addOnBackList(B, N);
 				elapsed = read_QPC() - start;
 				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
 					frequency << endl;
@@ -698,7 +696,7 @@ int main()
 				cin >> I;
 				system("CLS");
 				start = read_QPC();
-				addOnIndexList(lista, N, I);
+				addOnIndexList(B, N, I);
 				elapsed = read_QPC() - start;
 				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
 					frequency << endl;
@@ -710,7 +708,7 @@ int main()
 			case 6:
 				system("CLS");
 				start = read_QPC();
-				deleteOnFrontList(lista);
+				deleteOnFrontList(B);
 				elapsed = read_QPC() - start;
 				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
 					frequency << endl;
@@ -722,7 +720,7 @@ int main()
 			case 7:
 				system("CLS");
 				start = read_QPC();
-				deleteOnBackList(lista);
+				deleteOnBackList(B);
 				elapsed = read_QPC() - start;
 				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
 					frequency << endl;
@@ -735,7 +733,7 @@ int main()
 				cout << "\nPodaj wartosc indexu=";
 				cin >> I;				
 				system("CLS");
-				start = read_QPC(); deleteOnIndexList(lista, I);
+				start = read_QPC(); deleteOnIndexList(B, I);
 				elapsed = read_QPC() - start;
 				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
 					frequency << endl;
@@ -744,22 +742,11 @@ int main()
 				system("CLS");
 				break;
 
-			case 9:
-				system("CLS");
-				start = read_QPC();
-				saveList(lista);
-				elapsed = read_QPC() - start;
-				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
-					frequency << endl;
-
-				system("pause");
-				system("CLS");
-				break;
 
 			case 10:
 				system("CLS");
 				start = read_QPC();
-				openList(lista);
+				openList(B);
 				elapsed = read_QPC() - start;
 				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
 					frequency << endl;
@@ -773,7 +760,7 @@ int main()
 				cin >> I;
 				system("CLS");
 				start = read_QPC();
-				searchList(lista, I);
+				searchList(B, I);
 				elapsed = read_QPC() - start;
 				cout << "\nTime [ms] = " << setprecision(3) << (1000.0 * elapsed) /
 					frequency << endl;
